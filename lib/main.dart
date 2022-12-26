@@ -1,3 +1,6 @@
+import 'dart:developer';
+import 'dart:js_util';
+
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
 
@@ -11,21 +14,15 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return  MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
+      theme: ThemeData(          // Add the 5 lines from here... 
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.black,
+        ),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home:  const RandomWords(),
     );
   }
 }
@@ -100,27 +97,97 @@ class RandomWords extends StatefulWidget {
 class _RandomWordsState extends State<RandomWords> {
   final _sugg = <WordPair>[];
   final _biggerFont = const TextStyle(fontSize: 18);
+  final _saved = <WordPair>{};
+
+  void _pushSaved() {
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (context) {
+          final tiles = _saved.map((e) {
+            return ListTile(
+              title: Text(
+                e.asPascalCase,
+                style: _biggerFont,
+              ),
+            );
+          }
+          );
+          final divided = tiles.isNotEmpty
+            ? ListTile.divideTiles(
+              context: context,
+              tiles: tiles,
+            ).toList():<Widget>[];
+
+            return Scaffold(
+              appBar: AppBar(
+               title: const Text('Saved'), 
+              ),
+              body: ListView(children: divided),
+            );
+        },
+      )
+    );
+  }
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      padding: const EdgeInsets.all(16.0),
-      itemBuilder: (context, i) {
-      if (i.isOdd) {
-        return const Divider(); 
-      }
-      final index = i ~/ 2;
-      if (index >= _sugg.length) {
-        _sugg.addAll(generateWordPairs().take(10));
-      }
-      return ListTile(
-        title: Text(
-          _sugg[index].asPascalCase,
-          style: _biggerFont,
-        ), 
-      );
-    },
-      
-  );
+    return Scaffold(
+      appBar: AppBar(  
+        title: const Text('Startup Name Generator'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.list),
+            onPressed: _pushSaved,
+            tooltip: 'Saved Suggestions',
+          ),
+        ],
+      ),
+      body:  ListView.builder(
+        padding: const EdgeInsets.all(16.0),
+        itemBuilder: (context, i) {
+        if (i.isOdd) {
+          return const Divider(); 
+        }
+        final index = i ~/ 2;
+        
+        if (index >= _sugg.length) {
+          _sugg.addAll(generateWordPairs().take(10));
+        }
+        final alreadySaved = _saved.contains(_sugg[index]);
+        var color = const Color.fromARGB(255, 161, 46, 46);
+        if (index.isOdd) {
+        
+          color = const Color.fromARGB(255, 64, 39, 151) ; 
+        } 
+        
+        return ListTile(
+          title: Text(
+            _sugg[index].asPascalCase,
+            style: _biggerFont,
+          ), 
+          trailing: Icon(
+            alreadySaved ? Icons.favorite : Icons.favorite_border,
+            color: alreadySaved ? Colors.red :null,
+            semanticLabel: alreadySaved ? 'Remove from saved' : 'Save',
+          ),
+          onTap: () {
+            setState(() {
+              if (alreadySaved) {
+                _saved.remove(_sugg[index]);
+              } else {
+                _saved.add(_sugg[index]);
+              }
+              
+            });
+          },
+          textColor: color,
+          
+          
+        );
+      },
+        
+      ),
+    );
+    
    
   }
 }
