@@ -1,8 +1,10 @@
+
+
 import 'dart:developer';
-import 'dart:js_util';
 
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
+import 'package:flutter_application_1/second.dart';
 
 void main() {
   runApp(const MyApp());
@@ -99,6 +101,36 @@ class _RandomWordsState extends State<RandomWords> {
   final _biggerFont = const TextStyle(fontSize: 18);
   final _saved = <WordPair>{};
 
+void _pushItem1(){
+  Navigator.of(context).push(
+    MaterialPageRoute<void>(
+      builder: (context) {
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text("tefdsfrf"),
+          ),
+          body: Column(
+          children:  <Widget>[
+            const Text('Deliver features faster'),
+            const Text('Craft beautiful UIs'),
+            const Placeholder(fallbackHeight: 100,
+            fallbackWidth: 50,),
+            ElevatedButton(onPressed: () {
+              
+            }, child: const Text("er")),
+            const Expanded(
+              child: FittedBox(
+                child: FlutterLogo(),
+              ),
+            ),
+          ],
+        ),
+        );
+      },
+    )
+  );
+}
+
   void _pushSaved() {
     Navigator.of(context).push(
       MaterialPageRoute<void>(
@@ -118,16 +150,17 @@ class _RandomWordsState extends State<RandomWords> {
               tiles: tiles,
             ).toList():<Widget>[];
 
-            return Scaffold(
-              appBar: AppBar(
-               title: const Text('Saved'), 
-              ),
-              body: ListView(children: divided),
-            );
+          return Scaffold(
+            appBar: AppBar(
+              title: const Text('Saved'), 
+            ),
+            body: ListView(children: divided),
+          );
         },
       )
     );
   }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -185,6 +218,34 @@ class _RandomWordsState extends State<RandomWords> {
         );
       },
         
+      ),
+    
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.green,
+              ),
+              child: Text("test"),
+            ),
+            ListTile(
+              title: const Text('item 1'),
+              onTap: () {
+                log("passe par là");
+                _pushItem1();
+                //Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: const Text("el 2"),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            )
+          ],
+        ),
       ),
     );
     
