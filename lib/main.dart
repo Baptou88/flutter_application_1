@@ -165,7 +165,7 @@ void _pushItem1(){
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(  
-        title: const Text('Startup Name Generator'),
+        title: const Text('Startu Name Generator'),
         actions: [
           IconButton(
             icon: const Icon(Icons.list),
@@ -241,7 +241,16 @@ void _pushItem1(){
             ListTile(
               title: const Text("el 2"),
               onTap: () {
-                Navigator.pop(context);
+                //Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder:  (context) => 
+                    const Second()
+                  ),
+                );
+                    
+
               },
             )
           ],
