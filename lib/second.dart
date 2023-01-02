@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -18,7 +17,8 @@ class _SecondState extends State<Second> {
   late Future<Album> _futureAlbum;
   bool buttonState = true;
   int queryNumber = 1;
-
+  double _sliderValue = 0;
+  final int _sliderMul = 100;
   @override
   void initState() {
     super.initState();
@@ -47,9 +47,14 @@ class _SecondState extends State<Second> {
           tooltip: 'errre',)
       ],
       title: const Text("ert"),),
-      body: Column (
+      body: ListView(children: [
+        Column (
         children:  [
           const Text("Container"),
+          const ElevatedCardExample(),
+          const FilledCardExample(),
+          const OutlinedCardExample(),
+           DatePickerDialog(initialDate: DateTime.now(), firstDate: DateTime.now(), lastDate: DateTime.utc(2023,01,30)),
           const Text("cont2"),
           ElevatedButton(onPressed: () {
             setState(() {
@@ -86,10 +91,22 @@ class _SecondState extends State<Second> {
             },
             
           ),
-          Text('$buttonState')
+          Text('$buttonState'),
+          Slider(
+            value: _sliderValue * _sliderMul, 
+            max: (100 * _sliderMul.toDouble()),
+            divisions: 1 * _sliderMul,
+            onChanged: (double value) {
+              setState(() {
+                _sliderValue = value / _sliderMul;
+              });
+            }
+          ),
+          Text("$_sliderValue")
       ]
       
-    ))  ;
+    )
+      ],))  ;
   }
 }
 
@@ -105,5 +122,70 @@ class Album {
   factory Album. fromJson(Map<String,dynamic> json) {
     return Album(id: json['id'], userId: json['userId'], title: json['title']);
 
+  }
+}
+
+class ElevatedCardExample extends StatelessWidget {
+  const ElevatedCardExample({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+      child: Card(
+        child: SizedBox(
+          width: 300,
+          height: 100,
+          child: Center(child: Text('Elevated Card')),
+        ),
+      ),
+    );
+  }
+}
+class FilledCardExample extends StatelessWidget {
+  const FilledCardExample({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Card(
+        elevation: 0,
+        color: Theme.of(context).colorScheme.surfaceVariant,
+        child: const SizedBox(
+          width: 300,
+          height: 100,
+          child: Center(child: Text('Filled Card')),
+        ),
+      ),
+    );
+  }
+}
+
+/// An example of the outlined card type.
+///
+/// To make a [Card] match the outlined type, the default elevation and shape
+/// need to be changed to the values from the spec:
+///
+/// https://m3.material.io/components/cards/specs#0f55bf62-edf2-4619-b00d-b9ed462f2c5a
+class OutlinedCardExample extends StatelessWidget {
+  const OutlinedCardExample({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Card(
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(
+            color: Theme.of(context).colorScheme.outline,
+          ),
+          borderRadius: const BorderRadius.all(Radius.circular(12)),
+        ),
+        child: const SizedBox(
+          width: 300,
+          height: 100,
+          child: Center(child: Text('Outlined Card')),
+        ),
+      ),
+    );
   }
 }
