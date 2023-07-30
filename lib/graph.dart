@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:high_chart/high_chart.dart';
 
 class Graph extends StatefulWidget {
   const Graph({super.key});
-  
+
   @override
   State<Graph> createState() => _GraphState();
 }
 
 class _GraphState extends State<Graph> {
-  final String _charData= '''{
+  final String _charData = '''{
     title: {
           text: 'Combination chart'
       },    

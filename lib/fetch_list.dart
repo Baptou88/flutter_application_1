@@ -86,7 +86,6 @@ class _FetchListState extends State<FetchList> {
   Future<List<Album>> fetch() async {
     final response = await http
         .get(Uri.parse('https://jsonplaceholder.typicode.com/albums'));
-    List<Album> luist;
     log('fetch');
     if (response.statusCode == 200) {
       //luist = List.from(jsonDecode(response.body));

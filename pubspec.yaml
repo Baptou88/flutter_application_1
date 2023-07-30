@@ -41,6 +41,7 @@ dependencies:
   draw_graph: ^1.0.0
   syncfusion_flutter_charts: ^20.4.41
   firebase_core: ^2.4.1
+  web_socket_channel: ^2.4.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

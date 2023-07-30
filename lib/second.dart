@@ -54,7 +54,7 @@ class _SecondState extends State<Second> {
           const ElevatedCardExample(),
           const FilledCardExample(),
           const OutlinedCardExample(),
-           DatePickerDialog(initialDate: DateTime.now(), firstDate: DateTime.now(), lastDate: DateTime.utc(2023,01,30)),
+           DatePickerDialog(initialDate: DateTime.now(), firstDate: DateTime.now(), lastDate: DateTime.utc(2023,11,30)),
           const Text("cont2"),
           ElevatedButton(onPressed: () {
             setState(() {

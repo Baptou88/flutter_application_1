@@ -4,8 +4,6 @@ import 'dart:core';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:http/http.dart' as http;
 
 class DataEtang extends StatefulWidget {
@@ -28,12 +26,13 @@ class _DataEtangState extends State<DataEtang> {
     _dataEtang = fetchData();
     setUpTimer();
   }
-@override
+
+  @override
   void dispose() {
-    
     super.dispose();
     fetchTimer.cancel();
   }
+
   void setUpTimer() {
     fetchTimer = Timer.periodic(const Duration(seconds: 5), fetchTimerCb);
   }
@@ -60,7 +59,7 @@ class _DataEtangState extends State<DataEtang> {
           ElevatedButton(
               onPressed: () {
                 setState(() {
-                  _dataEtang =  fetchData();
+                  _dataEtang = fetchData();
                 });
               },
               child: const Text("Fetch")),
@@ -151,7 +150,6 @@ class NodeStatus {
 }
 
 dataEtangTModel(DataEtangT data) {
-  
   log('fn');
   TextStyle style = const TextStyle(fontSize: 20);
   return Container(
@@ -164,12 +162,11 @@ dataEtangTModel(DataEtangT data) {
     child: Column(
       children: [
         Card(
-          
             child: FittedBox(
-              alignment: Alignment.center,
-              fit: BoxFit.none,
-              child: Text("Etang", style: style),
-            )),
+          alignment: Alignment.center,
+          fit: BoxFit.none,
+          child: Text("Etang", style: style),
+        )),
         Row(children: [
           Text(
             "Niveau: ",

@@ -5,14 +5,17 @@ import 'package:english_words/english_words.dart';
 import 'package:flutter_application_1/graph.dart';
 import 'package:flutter_application_1/second.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_application_1/websocket.dart';
 import 'firebase_options.dart';
 
-import 'fetchList.dart';
-import 'Graph3.dart';
-import 'dataEtang.dart';
+import 'fetch_list.dart';
+import 'graph_3.dart';
+import 'data_etang.dart';
 import 'graph2.dart';
 
+  final  Uri wsUri = Uri.parse('ws://hydro.hydro-babiat.ovh/ws');
 Future<void> main() async {
+
   runApp(const MyApp());
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -303,6 +306,16 @@ class _RandomWordsState extends State<RandomWords> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const DataEtang()),
+                );
+              },
+            ),
+            ListTile(
+              title: const Text("websocket"),
+              onTap: () {
+                //Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const Websocket()),
                 );
               },
             ),
