@@ -6,6 +6,7 @@ import 'package:flutter_application_1/graph.dart';
 import 'package:flutter_application_1/second.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_application_1/websocket.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 import 'firebase_options.dart';
 
 import 'fetch_list.dart';
@@ -13,10 +14,15 @@ import 'graph_3.dart';
 import 'data_etang.dart';
 import 'graph2.dart';
 
-  final  Uri wsUri = Uri.parse('ws://hydro.hydro-babiat.ovh/ws');
+final Uri wsUri = Uri.parse('ws://hydro.hydro-babiat.ovh/ws');
 Future<void> main() async {
-
+  //create a ws channel
+  final channel = WebSocketChannel.connect(wsUri);
+  channel.stream.listen((data) {
+    log(data);
+  }, onError: (error) => log(error));
   runApp(const MyApp());
+  log("par là");
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
