@@ -43,7 +43,7 @@ jobs:
 
       - name: 'Build APK'
         id: 'build'
-        run: 'flutter build apk --split-per-abi && echo " name=built-apk::build/app/outputs/flutter-apk/" >>$GITHUB_OUTPUT'
+        run: 'flutter build apk --split-per-abi && echo "::set-output name=built-apk::build/app/outputs/flutter-apk/"'
         # Build the APK using the value of the "matrix-target" input.
         # Use the "id" property to give the step a unique identifier.
         # Use the "::set-output" command to set the value of the "built-apk" output variable.
